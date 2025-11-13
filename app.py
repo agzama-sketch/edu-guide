@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///universities.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///myproject.db')
 db = SQLAlchemy(app)
 
 class University(db.Model):
@@ -178,5 +179,11 @@ def answer():
 
     return render_template('answer.html', result=result.capitalize(), description=description)
 
+@app.route('/google12345abcd.html')
+def google_verification():
+    return app.send_static_file('google12345abcd.html')
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    return send_from_directory('static', filename)
 if __name__ == '__main__':
     app.run(debug=True)
