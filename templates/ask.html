@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Mini-test
+{% endblock %}
+
+{% block content %}
+<section class="quiz-container">
+  <h1>Questions to identify your ideal career field</h1>
+  <form action="{{ url_for('answer') }}" method="post">
+    <div class="question">
+      <h4>1. Which school subject do you enjoy most?</h4>
+      <label><input type="radio" name="q1" value="Engineering"> Physics / Math</label><br>
+      <label><input type="radio" name="q1" value="Medicine"> Biology / Chemistry</label><br>
+      <label><input type="radio" name="q1" value="Business"> Economics / Business</label><br>
+      <label><input type="radio" name="q1" value="Humanities"> History / Literature</label><br>
+      <label><input type="radio" name="q1" value="Science and computer science"> Computer Science</label>
+    </div>
+    <div class="question">
+      <h4>2. What type of work do you find most interesting?</h4>
+      <label><input type="radio" name="q2" value="Engineering"> Designing or building things</label><br>
+      <label><input type="radio" name="q2" value="Medicine"> Helping people stay healthy</label><br>
+      <label><input type="radio" name="q2" value="Business"> Managing or organizing projects</label><br>
+      <label><input type="radio" name="q2" value="Humanities"> Studying human behavior and ideas</label><br>
+      <label><input type="radio" name="q2" value="Science and computer science"> Doing experiments or programming</label>
+    </div>
+    <div class="question">
+      <h4>3. What kind of environment do you prefer?</h4>
+      <label><input type="radio" name="q3" value="Engineering"> Labs or workshops</label><br>
+      <label><input type="radio" name="q3" value="Medicine"> Hospitals or clinics</label><br>
+      <label><input type="radio" name="q3" value="Business"> Offices or startups</label><br>
+      <label><input type="radio" name="q3" value="Humanities"> Libraries or museums</label><br>
+      <label><input type="radio" name="q3" value="Science and computer science"> Research labs or computer labs</label>
+    </div>
+    <div class="question">
+      <h4>4. What motivates you the most?</h4>
+      <label><input type="radio" name="q4" value="Engineering"> Solving complex problems</label><br>
+      <label><input type="radio" name="q4" value="Medicine"> Making people’s lives better</label><br>
+      <label><input type="radio" name="q4" value="Business"> Achieving success and leadership</label><br>
+      <label><input type="radio" name="q4" value="Humanities"> Understanding the world and people</label><br>
+      <label><input type="radio" name="q4" value="Science and computer science"> Discovering new knowledge</label>
+    </div>
+    <div class="question">
+      <h4>5. Which activity sounds most appealing to you?</h4>
+      <label><input type="radio" name="q5" value="Engineering"> Building a robot or designing a bridge</label><br>
+      <label><input type="radio" name="q5" value="Medicine"> Volunteering in a hospital</label><br>
+      <label><input type="radio" name="q5" value="Business"> Pitching a startup idea</label><br>
+      <label><input type="radio" name="q5" value="Humanities"> Writing a story or analyzing art</label><br>
+      <label><input type="radio" name="q5" value="Science and computer science"> Coding an app or doing lab experiments</label>
+    </div><br>
+    <button type="submit" class="btn-submit">See Result</button>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,179 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f5f8f6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.content {
+    flex: 1;
+    padding: 30px;
+}
+
+footer {
+    margin-top: auto;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    padding: 15px 0;
+}
+
+.footer__img {
+    height: 52px;
+    width: 52px;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    padding: 10px;
+    z-index: 1000;
+    background: #fff;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+}
+
+.header__img {
+    height: 52px;
+    width: 52px;
+}
+
+.btn-nav {
+    color: #198754;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.btn-nav:hover {
+    background: #e9f5ee;
+    color: #146c43;
+}
+
+.btn-nav.active {
+    background: #198754;
+    color: white;
+}
+
+.filter-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background: #e9f5ee;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+.filter-form label {
+    font-weight: bold;
+    color: #146c43;
+}
+
+.filter-form select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #cfe7dc;
+}
+
+.filter-form button {
+    background-color: #198754;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filter-form button:hover {
+    background-color: #146c43;
+}
+
+.universities {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 300px;
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+.card h2 {
+    font-size: 1.1em;
+    color: #198754;
+    margin-bottom: 5px;
+}
+
+.card .field {
+    color: #555;
+    font-size: 0.9em;
+}
+
+details {
+  margin: 10px 0;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+summary {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+details[open] {
+  background: #fff8e1;
+}
+
+.portfolio-card {
+  background-color: #ffffff;
+  border-radius: 15px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.portfolio-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.portfolio-card .card-body {
+  padding: 25px;
+}
+
+.portfolio-card ul {
+  padding-left: 20px;
+  margin: 0;
+}
+

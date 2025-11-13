@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your result</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/second.css') }}">
+</head>
+<body>
+<section class="quiz-result">
+  <h2>Your ideal career field is:</h2>
+  <h3>{{ result }}</h3>
+  <p>{{ description }}</p>
+  <a href="{{ url_for('ask') }}" class="btn-back">Take the quiz again</a>
+</section>
+</body>
+</html>

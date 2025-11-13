@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+list of universities
+{% endblock %}
+
+{% block content %}
+<h1>Top 100 Universities in 2026</h1>
+<p>In this page you will find list of universities in different fields</p>
+<form method="get" action="/" class="filter-form">
+    <label for="field">Select section:</label>
+    <select id="field" name="field">
+        {% for f in fields %}
+            <option value="{{ f }}" {% if selected_field == f %}selected{% endif %}>{{ f }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Apply</button>
+</form>
+
+<div class="universities">
+    {% for uni in universities %}
+        <div class="card">
+            <h2>{{ uni.name }}</h2>
+            <p class="field">{{ uni.field }}</p>
+        </div>
+    {% else %}
+        <p>No universities found for this field from TOP 100. The list can change</p>
+    {% endfor %}
+</div>
+{% endblock %}
