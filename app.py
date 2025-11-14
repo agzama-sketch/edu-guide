@@ -182,8 +182,5 @@ def answer():
 @app.route('/google12345abcd.html')
 def google_verification():
     return app.send_static_file('google12345abcd.html')
-@app.route('/static/<path:filename>')
-def static_files(filename):
-    return send_from_directory('static', filename)
 if __name__ == '__main__':
     app.run(debug=True)
