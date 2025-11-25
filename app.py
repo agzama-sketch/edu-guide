@@ -1,161 +1,140 @@
 from flask import Flask, render_template, request
-from flask_sqlalchemy import SQLAlchemy
-import os
-
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///myproject.db')
-db = SQLAlchemy(app)
 
-class University(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False)
-    field = db.Column(db.String(50), nullable=False)
-
-@app.before_request
-def setup_db():
-    db.drop_all()
-    db.create_all()
-    if not University.query.first():
-        universities = [
-            ("Massachusetts Institute of Technology (MIT) — USA", "Technology"),
-            ("Imperial College London — UK", "Engineering"),
-            ("University of Oxford — UK", "Humanities"),
-            ("Harvard University — USA", "Medicine"),
-            ("University of Cambridge — UK", "Science"),
-            ("Stanford University — USA", "Engineering"),
-            ("ETH Zürich – Swiss Federal Institute of Technology — Switzerland", "Engineering"),
-            ("National University of Singapore (NUS) — Singapore", "Technology"),
-            ("University College London (UCL) — UK", "Science"),
-            ("California Institute of Technology (Caltech) — USA", "Technology"),
-            ("University of Pennsylvania (Penn) — USA", "Business"),
-            ("University of California, Berkeley (UCB) — USA", "Technology"),
-            ("The University of Melbourne (UniMelb) — Australia", "Medicine"),
-            ("Peking University (PKU) — China", "Science"),
-            ("Nanyang Technological University, Singapore (NTU) — Singapore", "Technology"),
-            ("Cornell University — USA", "Engineering"),
-            ("The University of Hong Kong (HKU) — Hong Kong", "Medicine"),
-            ("The University of Sydney (USyd) — Australia", "Medicine"),
-            ("The University of New South Wales (UNSW Sydney) — Australia", "Science"),
-            ("Tsinghua University — China", "Engineering"),
-            ("University of Chicago — USA", "Business"),
-            ("Princeton University — USA", "Mathematics"),
-            ("Yale University — USA", "Humanities"),
-            ("Université PSL — France", "Science"),
-            ("University of Toronto (U of T) — Canada", "Science"),
-            ("École Polytechnique Fédérale de Lausanne (EPFL) — Switzerland", "Engineering"),
-            ("The University of Edinburgh (UoE) — UK", "Humanities"),
-            ("Technical University of Munich (TUM) — Germany", "Engineering"),
-            ("McGill University — Canada", "Medicine"),
-            ("Australian National University (ANU) — Australia", "Science"),
-            ("Seoul National University (SNU) — South Korea", "Technology"),
-            ("Johns Hopkins University (JHU) — USA", "Medicine"),
-            ("The University of Tokyo (UTokyo) — Japan", "Science"),
-            ("Columbia University — USA", "Business"),
-            ("The University of Manchester (UoM) — UK", "Science"),
-            ("The Chinese University of Hong Kong (CUHK) — Hong Kong", "Science"),
-            ("Monash University — Australia", "Medicine"),
-            ("University of British Columbia (UBC) — Canada", "Science"),
-            ("Fudan University — China", "Business"),
-            ("King's College London (KCL) — UK", "Medicine"),
-            ("The University of Queensland (UQ) — Australia", "Science"),
-            ("University of California, Los Angeles (UCLA) — USA", "Technology"),
-            ("New York University (NYU) — USA", "Business"),
-            ("University of Michigan-Ann Arbor — USA", "Engineering"),
-            ("Shanghai Jiao Tong University (SJTU) — China", "Engineering"),
-            ("Institut Polytechnique de Paris (IP Paris) — France", "Engineering"),
-            ("The Hong Kong University of Science and Technology (HKUST) — Hong Kong", "Technology"),
-            ("Zhejiang University (ZJU) — China", "Technology"),
-            ("Delft University of Technology (TU Delft) — Netherlands", "Engineering"),
-            ("Kyoto University — Japan", "Science"),
-            ("Northwestern University — USA", "Business"),
-            ("The London School of Economics and Political Science (LSE) — UK", "Social Sciences"),
-            ("KAIST - Korea Advanced Institute of Science & Technology — South Korea", "Technology"),
-            ("University of Bristol — UK", "Science"),
-            ("University of Amsterdam (UvA) — Netherlands", "Social Sciences"),
-            ("Yonsei University — South Korea", "Business"),
-            ("The Hong Kong Polytechnic University (PolyU) — Hong Kong", "Engineering"),
-            ("Carnegie Mellon University (CMU) — USA", "Technology"),
-            ("Ludwig-Maximilians-Universität München (LMU) — Germany", "Humanities"),
-            ("Universiti Malaya (UM) — Malaysia", "Medicine"),
-            ("Duke University — USA", "Medicine"),
-            ("City University of Hong Kong (CityU) — Hong Kong", "Technology"),
-            ("KU Leuven — Belgium", "Science"),
-            ("Sorbonne University — France", "Humanities"),
-            ("The University of Auckland — New Zealand", "Science"),
-            ("University of Texas at Austin (UT Austin) — USA", "Engineering"),
-            ("Korea University — South Korea", "Technology"),
-            ("National Taiwan University (NTU) — Taiwan", "Science"),
-            ("The University of Warwick — UK", "Business"),
-            ("University of Illinois Urbana-Champaign — USA", "Engineering"),
-            ("Universidad de Buenos Aires (UBA) — Argentina", "Social Sciences"),
-            ("University of California, San Diego (UCSD) — USA", "Technology"),
-            ("Université Paris-Saclay — France", "Science"),
-            ("KTH Royal Institute of Technology — Sweden", "Engineering"),
-            ("Lund University — Sweden", "Science"),
-            ("University of Washington — USA", "Medicine"),
-            ("The University of Western Australia (UWA) — Australia", "Medicine"),
-            ("University of Glasgow — UK", "Science"),
-            ("Brown University — USA", "Humanities"),
-            ("University of Birmingham — UK", "Science"),
-            ("University of Southampton — UK", "Engineering"),
-            ("The University of Adelaide — Australia", "Science"),
-            ("University of Leeds — UK", "Business"),
-            ("Universität Heidelberg — Germany", "Medicine"),
-            ("Tokyo Institute of Technology (Tokyo Tech) — Japan", "Technology"),
-            ("Osaka University — Japan", "Science"),
-            ("Trinity College Dublin — Ireland", "Humanities"),
-            ("University of Technology Sydney (UTS) — Australia", "Technology"),
-            ("Durham University — UK", "Humanities"),
-            ("Pennsylvania State University (Penn State) — USA", "Engineering"),
-            ("Purdue University — USA", "Engineering"),
-            ("Universidade de São Paulo (USP) — Brazil", "Science"),
-            ("Pontificia Universidad Católica de Chile (UC) — Chile", "Humanities"),
-            ("Lomonosov Moscow State University (MSU) — Russia", "Science"),
-            ("Universidad Nacional Autónoma de México (UNAM) — Mexico", "Social Sciences"),
-            ("University of Alberta — Canada", "Science"),
-            ("Freie Universitaet Berlin — Germany", "Humanities"),
-            ("Pohang University of Science And Technology (POSTECH) — South Korea", "Technology"),
-            ("RWTH Aachen University — Germany", "Engineering"),
-            ("University of Copenhagen — Denmark", "Science"),
-        ]
-        for i, (name, field) in enumerate(universities, start=1):
-            ranked_name = f"{i}. {name}"
-            db.session.add(University(name=ranked_name, field=field))
-        db.session.commit()
-
+universities = [
+    {"name": "1. Massachusetts Institute of Technology (MIT) — USA", "field": "Technology"},
+    {"name": "2. Imperial College London — UK", "field": "Engineering"},
+    {"name": "3. University of Oxford — UK", "field": "Humanities"},
+    {"name": "4. Harvard University — USA", "field": "Medicine"},
+    {"name": "5. University of Cambridge — UK", "field": "Science"},
+    {"name": "6. Stanford University — USA", "field": "Engineering"},
+    {"name": "7. ETH Zürich – Swiss Federal Institute of Technology — Switzerland", "field": "Engineering"},
+    {"name": "8. National University of Singapore (NUS) — Singapore", "field": "Technology"},
+    {"name": "9. University College London (UCL) — UK", "field": "Science"},
+    {"name": "10. California Institute of Technology (Caltech) — USA", "field": "Technology"},
+    {"name": "11. University of Pennsylvania (Penn) — USA", "field": "Business"},
+    {"name": "12. University of California, Berkeley (UCB) — USA", "field": "Technology"},
+    {"name": "13. The University of Melbourne (UniMelb) — Australia", "field": "Medicine"},
+    {"name": "14. Peking University (PKU) — China", "field": "Science"},
+    {"name": "15. Nanyang Technological University, Singapore (NTU) — Singapore", "field": "Technology"},
+    {"name": "16. Cornell University — USA", "field": "Engineering"},
+    {"name": "17. The University of Hong Kong (HKU) — Hong Kong", "field": "Medicine"},
+    {"name": "18. The University of Sydney (USyd) — Australia", "field": "Medicine"},
+    {"name": "19. The University of New South Wales (UNSW Sydney) — Australia", "field": "Science"},
+    {"name": "20. Tsinghua University — China", "field": "Engineering"},
+    {"name": "21. University of Chicago — USA", "field": "Business"},
+    {"name": "22. Princeton University — USA", "field": "Mathematics"},
+    {"name": "23. Yale University — USA", "field": "Humanities"},
+    {"name": "24. Université PSL — France", "field": "Science"},
+    {"name": "25. University of Toronto (U of T) — Canada", "field": "Science"},
+    {"name": "26. École Polytechnique Fédérale de Lausanne (EPFL) — Switzerland", "field": "Engineering"},
+    {"name": "27. The University of Edinburgh (UoE) — UK", "field": "Humanities"},
+    {"name": "28. Technical University of Munich (TUM) — Germany", "field": "Engineering"},
+    {"name": "29. McGill University — Canada", "field": "Medicine"},
+    {"name": "30. Australian National University (ANU) — Australia", "field": "Science"},
+    {"name": "31. Seoul National University (SNU) — South Korea", "field": "Technology"},
+    {"name": "32. Johns Hopkins University (JHU) — USA", "field": "Medicine"},
+    {"name": "33. The University of Tokyo (UTokyo) — Japan", "field": "Science"},
+    {"name": "34. Columbia University — USA", "field": "Business"},
+    {"name": "35. The University of Manchester (UoM) — UK", "field": "Science"},
+    {"name": "36. The Chinese University of Hong Kong (CUHK) — Hong Kong", "field": "Science"},
+    {"name": "37. Monash University — Australia", "field": "Medicine"},
+    {"name": "38. University of British Columbia (UBC) — Canada", "field": "Science"},
+    {"name": "39. Fudan University — China", "field": "Business"},
+    {"name": "40. King's College London (KCL) — UK", "field": "Medicine"},
+    {"name": "41. The University of Queensland (UQ) — Australia", "field": "Science"},
+    {"name": "42. University of California, Los Angeles (UCLA) — USA", "field": "Technology"},
+    {"name": "43. New York University (NYU) — USA", "field": "Business"},
+    {"name": "44. University of Michigan-Ann Arbor — USA", "field": "Engineering"},
+    {"name": "45. Shanghai Jiao Tong University (SJTU) — China", "field": "Engineering"},
+    {"name": "46. Institut Polytechnique de Paris (IP Paris) — France", "field": "Engineering"},
+    {"name": "47. The Hong Kong University of Science and Technology (HKUST) — Hong Kong", "field": "Technology"},
+    {"name": "48. Zhejiang University (ZJU) — China", "field": "Technology"},
+    {"name": "49. Delft University of Technology (TU Delft) — Netherlands", "field": "Engineering"},
+    {"name": "50. Kyoto University — Japan", "field": "Science"},
+    {"name": "51. Northwestern University — USA", "field": "Business"},
+    {"name": "52. The London School of Economics and Political Science (LSE) — UK", "field": "Social Sciences"},
+    {"name": "53. KAIST — South Korea", "field": "Technology"},
+    {"name": "54. University of Bristol — UK", "field": "Science"},
+    {"name": "55. University of Amsterdam (UvA) — Netherlands", "field": "Social Sciences"},
+    {"name": "56. Yonsei University — South Korea", "field": "Business"},
+    {"name": "57. The Hong Kong Polytechnic University (PolyU) — Hong Kong", "field": "Engineering"},
+    {"name": "58. Carnegie Mellon University (CMU) — USA", "field": "Technology"},
+    {"name": "59. Ludwig-Maximilians-Universität München (LMU) — Germany", "field": "Humanities"},
+    {"name": "60. Universiti Malaya (UM) — Malaysia", "field": "Medicine"},
+    {"name": "61. Duke University — USA", "field": "Medicine"},
+    {"name": "62. City University of Hong Kong (CityU) — Hong Kong", "field": "Technology"},
+    {"name": "63. KU Leuven — Belgium", "field": "Science"},
+    {"name": "64. Sorbonne University — France", "field": "Humanities"},
+    {"name": "65. The University of Auckland — New Zealand", "field": "Science"},
+    {"name": "66. University of Texas at Austin (UT Austin) — USA", "field": "Engineering"},
+    {"name": "67. Korea University — South Korea", "field": "Technology"},
+    {"name": "68. National Taiwan University (NTU) — Taiwan", "field": "Science"},
+    {"name": "69. The University of Warwick — UK", "field": "Business"},
+    {"name": "70. University of Illinois Urbana-Champaign — USA", "field": "Engineering"},
+    {"name": "71. Universidad de Buenos Aires (UBA) — Argentina", "field": "Social Sciences"},
+    {"name": "72. University of California, San Diego (UCSD) — USA", "field": "Technology"},
+    {"name": "73. Université Paris-Saclay — France", "field": "Science"},
+    {"name": "74. KTH Royal Institute of Technology — Sweden", "field": "Engineering"},
+    {"name": "75. Lund University — Sweden", "field": "Science"},
+    {"name": "76. University of Washington — USA", "field": "Medicine"},
+    {"name": "77. The University of Western Australia (UWA) — Australia", "field": "Medicine"},
+    {"name": "78. University of Glasgow — UK", "field": "Science"},
+    {"name": "79. Brown University — USA", "field": "Humanities"},
+    {"name": "80. University of Birmingham — UK", "field": "Science"},
+    {"name": "81. University of Southampton — UK", "field": "Engineering"},
+    {"name": "82. The University of Adelaide — Australia", "field": "Science"},
+    {"name": "83. University of Leeds — UK", "field": "Business"},
+    {"name": "84. Universität Heidelberg — Germany", "field": "Medicine"},
+    {"name": "85. Tokyo Institute of Technology (Tokyo Tech) — Japan", "field": "Technology"},
+    {"name": "86. Osaka University — Japan", "field": "Science"},
+    {"name": "87. Trinity College Dublin — Ireland", "field": "Humanities"},
+    {"name": "88. University of Technology Sydney (UTS) — Australia", "field": "Technology"},
+    {"name": "89. Durham University — UK", "field": "Humanities"},
+    {"name": "90. Pennsylvania State University (Penn State) — USA", "field": "Engineering"},
+    {"name": "91. Purdue University — USA", "field": "Engineering"},
+    {"name": "92. Universidade de São Paulo (USP) — Brazil", "field": "Science"},
+    {"name": "93. Pontificia Universidad Católica de Chile (UC) — Chile", "field": "Humanities"},
+    {"name": "94. Lomonosov Moscow State University (MSU) — Russia", "field": "Science"},
+    {"name": "95. Universidad Nacional Autónoma de México (UNAM) — Mexico", "field": "Social Sciences"},
+    {"name": "96. University of Alberta — Canada", "field": "Science"},
+    {"name": "97. Freie Universitaet Berlin — Germany", "field": "Humanities"},
+    {"name": "98. Pohang University of Science And Technology (POSTECH) — South Korea", "field": "Technology"},
+    {"name": "99. RWTH Aachen University — Germany", "field": "Engineering"},
+    {"name": "100. University of Copenhagen — Denmark", "field": "Science"},
+]
+fields = [
+    "all", "Technology", "Medicine", "Business", "Engineering",
+    "Science", "Law", "Education", "Economics", "Mathematics",
+    "Social Sciences", "Philosophy", "Humanities", "Biology",
+    "Public Health", "Architecture"
+]
 @app.route('/')
 def index():
-    field = request.args.get("field", "all")
-    query = University.query
-    if field != "all":
-        query = query.filter_by(field=field)
-    universities = query.all()
+    selected = request.args.get("field", "all")
 
-    fields = [
-        "all", "Technology", "Medicine", "Business", "Engineering",
-        "Science", "Law", "Education", "Economics", "Mathematics",
-        "Social Sciences", "Philosophy", "Humanities", "Biology",
-        "Computer Science", "Public Health", "Architecture"
-    ]
+    if selected == "all":
+        filtered_universities = universities
+    else:
+        filtered_universities = [
+            u for u in universities if u["field"] == selected
+        ]
     return render_template(
         "index.html",
-        universities=universities,
+        universities=filtered_universities,
         fields=fields,
-        selected_field=field,
+        selected_field=selected,
         active_page="home"
     )
 @app.route('/create')
 def create():
     return render_template("create.html", active_page="create")
-
 @app.route('/research')
 def research():
     return render_template('research.html', active_page="research")
-
 @app.route('/ask')
 def ask():
     return render_template('ask.html', active_page="ask")
-
 @app.route('/answer', methods=['POST'])
 def answer():
     answers = [request.form.get(f'q{i}') for i in range(1, 6)]
@@ -179,8 +158,5 @@ def answer():
 
     return render_template('answer.html', result=result.capitalize(), description=description)
 
-@app.route('/google12345abcd.html')
-def google_verification():
-    return app.send_static_file('google12345abcd.html')
 if __name__ == '__main__':
     app.run(debug=True)
